@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App</title>
+    <script>
+        function deleteTodo(id) {
+            console.log(id);
+            fetch("http://localhost:3000/todos/" + id, {
+                method: "DELETE"
+            }).then((res) => console.log("task deleted"))
+            .catch((err) => console.log('Error', err));
+            let todoListContainer = document.getElementById("todoListContainer");
+            let deleteChild = document.getElementById(id);
+            todoListContainer.removeChild(deleteChild);
+        }
+
+        function onPress() {
+            let title = document.getElementById("title").value;
+            let description = document.getElementById("description").value;
+            fetch("http://localhost:3000/todos", {
+                method: "POST",
+                body: JSON.stringify({
+                    "title": title,
+                    "description": description
+                }),
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            }).then(res => res.json())
+            .then((data) => {
+                let todoListContainer = document.getElementById("todoListContainer");
+                    let childElement = document.createElement("div");
+                    let titleChildElement = document.createElement("span");
+                    titleChildElement.innerHTML = data.title;
+                    let descChildElement = document.createElement("span");
+                    descChildElement.innerHTML = data.description;
+                    let deleteButton = document.createElement("button");
+                    deleteButton.innerHTML = "DELETE";
+
+                    childElement.id = data.id;
+                    
+                    childElement.appendChild(titleChildElement);
+                    childElement.appendChild(descChildElement);
+                    childElement.appendChild(deleteButton);
+
+                    todoListContainer.appendChild(childElement);
+                    deleteButton.setAttribute("onclick", "deleteTodo("+ data.id + ")")
+            })
+            .catch((err) => console.log('Error', err));
+        }
+
+        function todoListDisplay() {
+            let todoList = 
+            fetch("http://localhost:3000/todos", {
+                method: "GET",
+            }).then((res) => res.json())
+            .then((data) => {
+                let todoListContainer = document.getElementById("todoListContainer");
+                todoListContainer.innerHTML = "";
+                data.forEach((todoItem) => {
+                    let childElement = document.createElement("div");
+                    let titleChildElement = document.createElement("span");
+                    titleChildElement.innerHTML = todoItem.title;
+                    let descChildElement = document.createElement("span");
+                    descChildElement.innerHTML = todoItem.description;
+                    let deleteButton = document.createElement("button");
+                    deleteButton.innerHTML = "DELETE";
+                    
+                    // Assigning ID to child element to delete the div using DELETE button.
+                    childElement.id = todoItem.id;
+                    childElement.appendChild(titleChildElement);
+                    childElement.appendChild(descChildElement);
+                    childElement.appendChild(deleteButton);
+                    
+                    // Appending all the 3 child divs to main div
+                    
+                    todoListContainer.appendChild(childElement);
+                    deleteButton.setAttribute("onclick", "deleteTodo("+ todoItem.id + ")")
+                })
+                })
+            .catch((err) => console.log('Error', err));
+        }
+        todoListDisplay();
+    </script>
+</head>
+    <h1>ToDo App</h1>
+    Todo Title: <input type="text" id="title">
+    <br><br>
+    Todo Description: <input type="text" id="description">
+    <button onclick="onPress()">Send Todo</button>
+    <hr>
+    <h1> TODo Lists </h1>
+    <div id="todoListContainer">
+
+    </div>
+</body>
+</html>

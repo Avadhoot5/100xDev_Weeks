@@ -1,0 +1,18 @@
+{
+  "name": "week-3",
+  "version": "1.0.0",
+  "main": "week3.1.js",
+  "scripts": {
+    "start": "nodemon week3.2.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "nodemon": "^3.1.0"
+  }
+}
