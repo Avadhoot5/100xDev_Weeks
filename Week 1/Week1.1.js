@@ -6,8 +6,6 @@
     // types of element in col's
 // 3. What do you need to print
 
-
-
 // Assignment 1
 
 // 1. Sum from 1 to 100

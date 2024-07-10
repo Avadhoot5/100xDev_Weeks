@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do App</title>
+    <script>
+
+        async function deleteTodo(id) {
+            let response = await fetch("http://localhost:3000/todos/"+id, {
+                method: "DELETE",
+                headers: {
+                        'Content-Type': 'application/json'
+                }
+            })
+            let data = await response.json();
+            if (data) console.log("todo deleted");
+            let parentElement = document.getElementById("todoListContainer");
+            let childElement = document.getElementById(id);
+            parentElement.removeChild(childElement);
+        }
+            
+        async function getTodos() {
+            try {
+                const response = await fetch('http://localhost:3000/todos');
+                const data = await response.json();
+                let parentElement = document.getElementById("todoListContainer");
+                parentElement.innerHTML = ""
+                data.forEach((data) => {
+                    let childElement = document.createElement("div");
+                    let childTitle = document.createElement("span");
+                    let childDescription = document.createElement("span");
+                    childTitle.innerHTML = data.title;
+                    childDescription.innerHTML = data.description;
+                    childElement.id = data.id;
+                    let deleteButton = document.createElement("button");
+                    deleteButton.innerHTML = "Delete";
+                    childElement.appendChild(childTitle);
+                    childElement.appendChild(childDescription);
+                    childElement.appendChild(deleteButton);
+                    parentElement.appendChild(childElement);
+                    deleteButton.setAttribute("onclick", `deleteTodo(${data.id})`)
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        async function sendTodo() {
+            let title = document.getElementById("title").value;
+            let description = document.getElementById("description").value;
+            try {
+                const response = await fetch("http://localhost:3000/todos", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        title,
+                        description
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                let data = await response.json();
+                console.log("todo added");
+                    let parentElement = document.getElementById("todoListContainer");
+                    let childElement = document.createElement("div");
+                    let childTitle = document.createElement("span");
+                    let childDescription = document.createElement("span");
+                    childTitle.innerHTML = title;
+                    childDescription.innerHTML = description;
+                    
+                    childElement.id = data.id;
+
+                    let deleteButton = document.createElement("button");
+                    deleteButton.innerHTML = "Delete";
+                    childElement.appendChild(childTitle);
+                    childElement.appendChild(childDescription);
+                    childElement.appendChild(deleteButton);
+                    parentElement.appendChild(childElement);
+                    deleteButton.setAttribute("onclick", `deleteTodo(${data.id})`)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        getTodos();
+
+    </script>
+</head>
+<body>
+    <h1> To DO App</h1>
+
+    <div class="todo">
+        <div class="title">
+            <label for="title">Title: </label>
+            <input type="text" id="title">
+        </div>
+        <br>
+        <div class="description">
+            <label for="description">Description: </label>
+            <input type="text" id="description">
+        </div>
+        <div class="sendTodo">
+            <button type="submit" onclick="sendTodo()">Submit</button>
+        </div>
+    </div>
+        <div id="todoListContainer">
+            
+        </div>
+
+</body>
+</html>
