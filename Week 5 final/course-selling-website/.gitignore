@@ -10,9 +10,9 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-*.local
+*.localy
 
-server/index.js
+/server/routes/index.js
 
 # Editor directories and files
 .vscode/*
