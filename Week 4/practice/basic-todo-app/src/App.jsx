@@ -29,7 +29,7 @@ function App() {
       <TodoSend></TodoSend>
       {todos.map((todo) => {
         return (<div key={todo.id}>
-          <Todo title={todo.title} description={todo.description} id={todo.id}></Todo>
+          <Todo setTodos={setTodos} title={todo.title} description={todo.description} id={todo.id}></Todo>
         </div>)
       })}
     </Container>

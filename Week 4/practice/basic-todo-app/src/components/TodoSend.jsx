@@ -7,6 +7,24 @@ function TodoSend() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
+    const addTodo = async () => {
+        try {
+            const response = await fetch("http://localhost:3000/todos/", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title,
+                    description
+                })
+            });
+            const data = await response.json();
+            alert('Todo added');
+        } catch (error) {
+            console.log("todo not sent");
+        }
+    }
 
   return (
     <>
@@ -23,7 +41,7 @@ function TodoSend() {
                     setDescription(e.target.value);
                 }}/>
             </Box>
-            <Button>Add Todo</Button>
+            <Button onClick={() => addTodo()}>Add Todo</Button>
         </TodoContainer>
     </>
   )
