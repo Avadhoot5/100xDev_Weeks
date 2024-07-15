@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import Todo from './components/Todo';
 import Nav from './components/Nav';
+import TodoSend from './components/TodoSend';
 import styled from 'styled-components';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
     <>
     <Container>
       <Nav></Nav>
+      <TodoSend></TodoSend>
       {todos.map((todo) => {
         return (<div key={todo.id}>
           <Todo title={todo.title} description={todo.description} id={todo.id}></Todo>
@@ -38,11 +40,6 @@ function App() {
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
-  background-color: black;
-  color: white;
-    
-
 
 `
 
