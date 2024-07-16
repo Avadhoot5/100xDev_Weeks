@@ -1,27 +1,9 @@
 import styled from 'styled-components';
 import { MdDelete } from "react-icons/md";
-import { RiEditCircleLine } from "react-icons/ri";
 import { useEffect, useState } from 'react'
 
-function Todo({setTodos, title, description, id}) {
+function Todo({title, description, id, deleteTodo}) {
 
-
-    const deleteTodo = async (id) => {
-        try {
-            const deleteData = await fetch("http://localhost:3000/todos/" + id, {
-                method: "DELETE",
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            if (deleteData) {
-                alert("Todo deleted");
-            }
-        } catch (error) {
-            console.log("not deleted");
-        }
-    }
-    
     return (
       <>
       <TodoRender>
@@ -34,10 +16,9 @@ function Todo({setTodos, title, description, id}) {
                         {description}
                     </Description>
                 </TitleandDesc>
-                <EditDeleteBtn>
-                    <RiEditCircleLine className='buttonED'/>
+                <DeleteBttn>
                     <MdDelete className='buttonED' onClick={() => {deleteTodo(id)}}/>
-                </EditDeleteBtn>
+                </DeleteBttn>
             </TodoContainer>
       </TodoRender>
       </>
@@ -77,7 +58,7 @@ const Title = styled.div`
 const Description = styled.p`
     max-width: 80%;
 `
-const EditDeleteBtn = styled.div`
+const DeleteBttn = styled.div`
     display: flex;
     flex-direction: row;
     gap: 10px;

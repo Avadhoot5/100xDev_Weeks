@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-function TodoSend() {
+function TodoSend({setTodos}) {
 
 
     const [title, setTitle] = useState("");
@@ -20,7 +20,7 @@ function TodoSend() {
                 })
             });
             const data = await response.json();
-            alert('Todo added');
+            setTodos(data);
         } catch (error) {
             console.log("todo not sent");
         }
