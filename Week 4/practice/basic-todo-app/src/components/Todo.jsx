@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { MdDelete } from "react-icons/md";
-import { useEffect, useState } from 'react'
+import { RiEditCircleLine } from "react-icons/ri";
 
-function Todo({title, description, id, deleteTodo}) {
+function Todo({title, description, id, editTodo, deleteTodo}) {
 
     return (
       <>
@@ -17,6 +17,7 @@ function Todo({title, description, id, deleteTodo}) {
                     </Description>
                 </TitleandDesc>
                 <DeleteBttn>
+                    <RiEditCircleLine className='buttonED' onClick={() => {editTodo(id)}}/>
                     <MdDelete className='buttonED' onClick={() => {deleteTodo(id)}}/>
                 </DeleteBttn>
             </TodoContainer>

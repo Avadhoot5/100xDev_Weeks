@@ -22,6 +22,15 @@ function App() {
     getTodo();
   }, [])
 
+  const editTodo = async (id) => {
+    try {
+      const editedTodo = await fetch("http://localhost:3000/todos/" + id, {
+        method: "PUT",
+      })
+    } catch (error) {
+      console.log('todo not edited');
+    }
+  }
   
   const deleteTodo = async (id) => {
     try {
@@ -47,7 +56,7 @@ function App() {
       <TodoSend todos={todos} setTodos={setTodos}/>
       {todos.map((todo) => {
         return (<div key={todo.id}>
-          <Todo deleteTodo={deleteTodo} todos={todos} setTodos={setTodos} title={todo.title} description={todo.description} id={todo.id}></Todo>
+          <Todo editTodo={editTodo} deleteTodo={deleteTodo} todos={todos} setTodos={setTodos} title={todo.title} description={todo.description} id={todo.id}></Todo>
         </div>)
       })}
     </Container>
