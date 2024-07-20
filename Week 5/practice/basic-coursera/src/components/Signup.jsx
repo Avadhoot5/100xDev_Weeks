@@ -33,7 +33,7 @@ function Signup() {
         gap: 15,
         width: '100%'
     }}>
-        <TextField id="outlined-basic" label="Username" variant="outlined"
+        <TextField id="outlined-basic" label="Email" variant="outlined"
         onChange={(e) => {
             setUsername(e.target.value);
         }} />
