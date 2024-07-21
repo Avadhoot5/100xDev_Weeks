@@ -1,3 +1,4 @@
+import { redirect, useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { Typography } from '@mui/material';
@@ -7,6 +8,7 @@ import { useEffect } from 'react';
 
 function GetCourses() {
 
+    const navigate = useNavigate();
     const [courses, setCourses] = useState([]);
 
     useEffect(() => {
@@ -16,13 +18,13 @@ function GetCourses() {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': localStorage.getItem("Authorization")
+                    'Authorization': 'Bearer ' + localStorage.getItem("token")
                 }
             })
             const data = await response.json();
             setCourses(data.courses);
         } catch (error) {
-            console.log(error);
+            console.log("course not found");
         }
     }
     fetchCourse();
@@ -36,41 +38,51 @@ function GetCourses() {
             flexDirection: 'column',
             alignItems: "center",
             margin: '0 auto',
-            paddingTop: 100,
-            width: '50%',
             gap: 20
         }}>
-        <div>
-            <Typography variant='h6'>
-                All Course
-            </Typography>
-        </div>
+        <Typography variant='h6'>
+            All Courses
+        </Typography>
+    </div>
+    <div style={{
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        gap: 20
+    }}>
+        {courses.map((course) => {
+            return <Course title={course.title} description={course.description}
+            id = {course.id} image={course.imageLink}></Course>
+        })}
+    </div>
+    </>
+  )
+}
+
+function Course({title, description, image, id, navigate}) {
+    return (
+    <div>
         <Card variant="outlined" style={{
             border: '2px solid black',
             padding: 20,
             display: 'flex',
-            flexDirection: 'column',
-            gap: 15,
-            width: '100%'
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        gap: 5
         }}>
-        <div>
-            {courses.map(course => {
-                return (<>
-                <div key = {course.id}>
-                    <div>
-                        {course.title}
-                    </div>
-                </div>
-                </>)
-            })}
-            <Button variant="contained"
-            onClick={async () => {
-            }}>Edit Course</Button>
+        <Typography variant='h6'>{title}</Typography>
+        <Typography variant='subtitle'>{description}</Typography>
+        <div >
+            <img style={{width: 250, height: 250}} src={image} />
         </div>
+        <Button variant='contained' onClick={() => redirect(`/getcourse/${id}`)}>Edit Course</Button>
         </Card>
-        </div>
-    </>
-  )
+    </div>
+)
 }
+
 
 export default GetCourses;

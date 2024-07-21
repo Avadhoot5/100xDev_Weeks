@@ -57,6 +57,7 @@ function Signup() {
                     })
                     const data = await response.json();
                     alert(data.message);
+                    window.location = "/"  
                 } catch (error) {
                     console.log(error);
                 }

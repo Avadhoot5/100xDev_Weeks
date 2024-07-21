@@ -6,8 +6,8 @@ import { useState } from 'react';
 
 function Signin() {
 
-    const [username, setUsername] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     
     return (
     <>
@@ -49,15 +49,14 @@ function Signin() {
                     const response = await fetch("http://localhost:3000/admin/login", {
                         method: "POST",
                         headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
+                            'Content-Type': 'application/json',
                             username, password
-                        })
+                        }
                     })
                     const data = await response.json();
-                    localStorage.setItem('Authorization', 'Bearer '+ data.token);
+                    localStorage.setItem('token', data.token);
                     alert('Success');
+                    window.location = "/"  
                 } catch (error) {
                     console.log(error);
                 }
