@@ -11,8 +11,9 @@ node_modules
 dist
 dist-ssr
 *.localy
+.env
 
-/server/routes/index.js
+./server/index.js
 
 # Editor directories and files
 .vscode/*
