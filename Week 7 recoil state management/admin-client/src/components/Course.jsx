@@ -7,13 +7,14 @@ import {Loading} from "./Loading";
 import { BASE_URL } from "../config.js";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { courseState } from "../store/atoms/course.js";
-import { courseImage, coursePrice, courseTitle, isCourseLoading } from "../store/selectors/courseDetails.js";
+import { courseDetails, courseImage, coursePrice, courseTitle, isCourseLoading } from "../store/selectors/courseDetails.js";
 
 function Course() {
     let { courseId } = useParams();
     const setCourse = useSetRecoilState(courseState);
     const courseLoading = useRecoilValue(isCourseLoading);
-    
+    const courseDetail = useRecoilValue(courseDetails);
+
     useEffect(() => {
     const init = async () => {
         try {
@@ -33,7 +34,7 @@ function Course() {
         }
         }
     init();
-    }, []);
+    }, [courseDetail]);
 
 
     if (courseLoading) {
