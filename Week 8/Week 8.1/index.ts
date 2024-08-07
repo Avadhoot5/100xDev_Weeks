@@ -65,3 +65,18 @@ console.log(ans);
 console.log(ans1);
 console.log(ans2);
 
+// Partials in TS
+
+type Todo = {
+    title: string;
+    description: string;
+    done: boolean;
+    id: string;
+}
+
+// allows to pass optional arguments to the function.
+type UpdatedTodoInput = Partial<Todo>
+
+function updateTodo(id: number, newProps: UpdatedTodoInput) {
+    return "";
+}
