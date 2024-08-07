@@ -74,9 +74,18 @@ type Todo = {
     id: string;
 }
 
+// type TodoNew = {
+//         title?: string;
+//         description?: string;
+//         done?: boolean;
+//         id?: string;
+// }
+// ?: Tells this is optional, but rather than repeating this we can use Partial
+
 // allows to pass optional arguments to the function.
 type UpdatedTodoInput = Partial<Todo>
 
 function updateTodo(id: number, newProps: UpdatedTodoInput) {
     return "";
 }
+updateTodo(1, {title: "hello"})
