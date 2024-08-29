@@ -31,15 +31,13 @@ const Signup = () => {
 
       if (response.ok) {
         setLoading(false);
-        console.log("User created success");
-        console.log(data);
 
         //set the token in local storage
-        localStorage.setItem('token', JSON.stringify(data.token)); 
+        localStorage.setItem('token', data.token); 
       }
 
       if (!response.ok) {
-        setError(error);
+        setError(data.message);
       }
     }
     catch (error) {

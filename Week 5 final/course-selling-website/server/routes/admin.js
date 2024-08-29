@@ -20,7 +20,7 @@ router.post('/signup', async (req, res) => {
     const {username, password} = req.body;
     const admin = await Admin.findOne({username});
     if (admin) {
-      res.status(403).json("Admin already exists");
+      res.status(403).json({'message': "Admin already exists"});
     } else {
       const newAdmin = new Admin({username, password});
       await newAdmin.save();
@@ -37,7 +37,7 @@ router.post('/login', async (req, res) => {
       const token = jwt.sign({username, role: 'admin'}, SECRET, {expiresIn: '1h'})    
       res.status(200).json({"message": 'Logged in successfully', "token": token});
     } else {
-      res.status(403).json("Admin authorization failed");
+      res.status(403).json({'message':"Admin authorization failed"});
     }
   });
   
