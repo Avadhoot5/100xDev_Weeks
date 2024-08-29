@@ -1,0 +1,16 @@
+.course-main-card {
+    border: 2px solid black;
+    width: 350px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.course-img {
+    width: 200px;
+    height: 200px;
+}
+

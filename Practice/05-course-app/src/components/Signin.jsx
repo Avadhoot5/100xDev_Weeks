@@ -3,11 +3,14 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './style/Signin.css';
 
 const BASE_URL = 'http://localhost:3000/admin/login';
 
 const Signin = () => {
+
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,12 +22,16 @@ const Signin = () => {
 
     try {
       setLoading(true);
+      setError(null);
       const response = await fetch(BASE_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({email, password})
+        body: JSON.stringify({
+          username: email,
+          password: password
+        })
       })
 
       const data = await response.json();
@@ -33,7 +40,10 @@ const Signin = () => {
         setLoading(false);
 
         //set the token in local storage
-        localStorage.setItem('token', data.token); 
+        localStorage.setItem('token', data.token)
+
+        navigate('/courses');
+
       }
 
       if (!response.ok) {
