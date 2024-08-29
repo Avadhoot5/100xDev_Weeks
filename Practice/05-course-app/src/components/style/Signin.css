@@ -1,0 +1,29 @@
+.main-card {
+    margin: 0 auto;
+    margin-top: 75px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 600px;
+}
+
+.main-card-label {
+    font-weight: bold;
+    font-size: 30px;
+    padding: 10px 0;
+}
+
+.user-pass {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width:40%;
+    margin-bottom: 20px;
+}
+
+.signup-bttn {
+    display: flex;
+    align-self: flex-start;    
+}
+

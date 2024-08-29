@@ -20,6 +20,7 @@ mongoose
   .then(() => {
     //listening on port once connection build
     app.listen(3000, () => {
+      console.log("Connected to DB");
       console.log("listening on port", 3000);
     });
   })

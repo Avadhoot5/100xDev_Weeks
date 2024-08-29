@@ -1,0 +1,20 @@
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 16px;
+    padding: 10px;
+}
+
+.welcome {
+    font-weight: 500;
+    word-spacing: 5px;
+    text-decoration: none;
+    color: black;
+}
+
+.sign-bttn {
+    display: flex;
+    gap: 12px;
+
+}
