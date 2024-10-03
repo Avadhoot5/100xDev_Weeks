@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "week2.1.js",
   "scripts": {
-    "start": "nodemon week2.1.js",
+    "start": "nodemon week2.2.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
