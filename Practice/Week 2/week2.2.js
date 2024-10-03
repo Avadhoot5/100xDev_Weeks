@@ -37,7 +37,6 @@ app.post('/math', (req, res) => {
     for (let i = 1; i <= value; i++) {
         mul *= i;
     }
-    
     res.status(200).json({Sum: sum, Multiply: mul});
 })
 
