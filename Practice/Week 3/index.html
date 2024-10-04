@@ -6,13 +6,93 @@
     <title>Todo</title>
     <script>
 
+        // Delete todo
+        async function deleteTodo(id) {
+            const response = await fetch(`http://localhost:3000/todos/${id}`, {
+                method: 'DELETE'
+            });
+            const homeElement = document.getElementById('main');
+            const childElement = document.getElementById(`${id}`);
+            homeElement.removeChild(childElement);
+        }
+
+        async function submitTodos() {
+            const titleValue = document.getElementById('title').value;
+            const descValue = document.getElementById('description').value;
+
+            const response = await fetch('http://localhost:3000/todos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"title": titleValue, "description": descValue})
+            })
+            const data = await response.json();
+
+            const homeElement = document.getElementById('main');
+            const childElement = document.createElement('div');
+            const titleElement = document.createElement('span');
+            const descElement = document.createElement('span');
+
+            titleElement.innerHTML = titleValue;
+            descElement.innerHTML = descValue;
+
+            const deleteBttn = document.createElement('button');
+            deleteBttn.innerHTML = 'DELETE';
+            childElement.id = data.id;
+            
+            childElement.appendChild(titleElement);
+            childElement.appendChild(descElement);
+            childElement.appendChild(deleteBttn);
+            homeElement.appendChild(childElement);
+            deleteBttn.setAttribute('onclick', `deleteTodo(${data.id})`);
+        }
+
+        async function getTodos() {
+            const response = await fetch('http://localhost:3000/todos');
+            const data = await response.json();
+            
+            const homeElement = document.getElementById('main');
+            homeElement.innerHTML = '';
+
+            data.forEach((value) => {
+                let childElement = document.createElement('div');
+                let titleElement = document.createElement('span');
+                let descElement = document.createElement('span');
+
+                titleElement.innerHTML = value.title;
+                descElement.innerHTML = value.description;
+
+                let deleteBttn = document.createElement('button');
+                deleteBttn.innerHTML = 'DELETE';
+                deleteBttn.setAttribute('onclick', `deleteTodo(${value.id})`);
+                childElement.id = value.id;
+
+                childElement.appendChild(titleElement);
+                childElement.appendChild(descElement);
+                childElement.appendChild(deleteBttn);
+
+                homeElement.appendChild(childElement);
+            })
+        }
+
+        getTodos();
+
     </script>
 
 </head>
 <body>
 
-
+    <form>
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title">
+        <label for="description">Description</label>
+        <input type="text" name="description" id="description">
+        <button onClick="submitTodos()" type="submit">Add Todo</button>
+    </form>
     <h2>List of Todos</h2>
+    <div id="main">
 
+    </div>
 </body>
 </html>
