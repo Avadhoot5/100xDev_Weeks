@@ -1,6 +1,8 @@
 // creating a promise, chaining & error handling
 
-const cart =['shoes', 'pants', 'kurta'];
+const cart = ['shoes', 'pants', 'kurta'];
+
+// createOrder, proceedToPayment, showOrderSummary, updateWallet
 
 const cartPromise = createOrder(cart);
 
@@ -19,26 +21,43 @@ function createOrder(cart) {
             reject(err);
         }
         const orderId = '12345';
-        if (orderId) {
-            resolve(orderId);
-        }
+        if (orderId) resolve(orderId);
     })
-
     return pr;
 }
 
 function proceedToPayment(orderId) {
     return new Promise((resolve, reject) => {
-        resolve('Payment Success!');
+        if (orderId) resolve('Payment Success!');
+        else {
+            const err = new Error('Payment Failed');
+            reject(err);
+        }
+    })
+}
+
+function showOrderSummary(paymentStatus) {
+    return new Promise((resolve, reject) => {
+        if (paymentStatus) resolve('Total amount: 500');
+    })
+}
+
+function updateWallet(orderSummary) {
+    return new Promise((resolve, reject) => {
+        if (orderSummary) resolve('Balance amount: 0');
     })
 }
 
 cartPromise
-    .then((orderId) => console.log(orderId))
     .then((orderId) => proceedToPayment(orderId))
-    .then((paymentStatus) => console.log(paymentStatus))
-    .catch((err) => console.log(err.message))
+    .then((paymentStatus) => {
+        console.log(paymentStatus);
+        return showOrderSummary(paymentStatus);
+    })
+    .then((orderSummary) => {
+        console.log(orderSummary);
+        return updateWallet(orderSummary);
+    })
+    .then((balance) => console.log(balance))
     .then(()=> {console.log('No matter what happens, this will be called')})
-
-
-
+    .catch((err) => console.log(err.message));
